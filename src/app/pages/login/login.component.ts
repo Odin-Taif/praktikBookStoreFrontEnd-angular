@@ -25,6 +25,9 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  isLoggedIn() {
+    throw new Error('Method not implemented.');
+  }
   authService = inject(AuthService);
   matSnackBar = inject(MatSnackBar);
   router = inject(Router);
