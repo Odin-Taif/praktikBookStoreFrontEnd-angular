@@ -1,5 +1,54 @@
-<p>{{ book.id }}</p>
-<p>{{ book.title }}</p>
-<p>{{ book.author }}</p>
-<p>{{ book.isbn }}</p>
-<p>{{ book.publishedDate }}</p>
+<div *ngIf="books.length > 0; else noBooks">
+  <div class="container mt-4">
+    <div class="row">
+      <div *ngFor="let book of books" class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+            <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
+            <p class="card-text">
+              <strong>Published Date:</strong>
+              {{ book.publishedDate | date : "longDate" }}
+            </p>
+            <div class="d-flex justify-content-between mt-3">
+              <button class="btn btn-primary">Edit</button>
+              <button class="btn btn-danger" (click)="deleteBook(book.id)">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add book card -->
+
+      <div class="col-md-4 mb-4 shadow-sm card">
+        <div class="card-body d-flex align-items-center justify-content-center">
+          <button
+            class="btn btn-success btn-lg d-flex align-items-center"
+            (click)="openAddBookModal()"
+          >
+            <i class="bi bi-plus me-2"></i> Add a new book!
+          </button>
+        </div>
+      </div>
+      <app-addbook-modal></app-addbook-modal>
+    </div>
+  </div>
+</div>
+
+<ng-template #noBooks>
+  <!-- Add book card -->
+  <div class="col-md-4 mb-4 shadow-sm card">
+    <div class="card-body d-flex align-items-center justify-content-center">
+      <button
+        class="btn btn-success btn-lg d-flex align-items-center"
+        (click)="openAddBookModal()"
+      >
+        <i class="bi bi-plus me-2"></i> Add a new book!
+      </button>
+    </div>
+  </div>
+  <app-addbook-modal></app-addbook-modal>
+  <p>No books available.</p>
+</ng-template>

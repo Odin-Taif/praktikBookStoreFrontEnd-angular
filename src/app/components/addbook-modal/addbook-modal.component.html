@@ -1,0 +1,135 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addBookModal"
+  tabindex="-1"
+  aria-labelledby="addBookModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBookModalLabel">Add New Book</h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeModal()"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="mb-3">
+            <label for="bookTitle" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookTitle"
+              formControlName="title"
+              placeholder="Enter book title"
+            />
+            <div
+              *ngIf="
+                form.get('title')?.invalid &&
+                (form.get('title')?.touched || form.get('title')?.dirty)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="form.get('title')?.errors?.['required']">
+                Title is required.
+              </div>
+              <div *ngIf="form.get('title')?.errors?.['minlength']">
+                Title must be at least 2 characters long.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="bookAuthor" class="form-label">Author</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookAuthor"
+              formControlName="author"
+              placeholder="Enter author name"
+            />
+            <div
+              *ngIf="
+                form.get('author')?.invalid &&
+                (form.get('author')?.touched || form.get('author')?.dirty)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="form.get('author')?.errors?.['required']">
+                Author is required.
+              </div>
+              <div *ngIf="form.get('author')?.errors?.['minlength']">
+                Author must be at least 2 characters long.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="bookISBN" class="form-label">ISBN</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookISBN"
+              formControlName="isbn"
+              placeholder="Enter ISBN number"
+            />
+            <div
+              *ngIf="
+                form.get('isbn')?.invalid &&
+                (form.get('isbn')?.touched || form.get('isbn')?.dirty)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="form.get('isbn')?.errors?.['required']">
+                ISBN is required.
+              </div>
+              <div *ngIf="form.get('isbn')?.errors?.['pattern']">
+                ISBN must be a 13-digit number.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="publishedDate" class="form-label">Published Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="publishedDate"
+              formControlName="publishedDate"
+            />
+            <div
+              *ngIf="
+                form.get('publishedDate')?.invalid &&
+                (form.get('publishedDate')?.touched ||
+                  form.get('publishedDate')?.dirty)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="form.get('publishedDate')?.errors?.['required']">
+                Published date is required.
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeModal()"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="form.invalid"
+            >
+              Add Book
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
