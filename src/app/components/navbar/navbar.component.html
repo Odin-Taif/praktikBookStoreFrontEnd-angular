@@ -4,13 +4,25 @@
     class="d-flex justify-content-between align-items-center px-4 py-2"
   >
     <!-- Menu Button -->
-    <button mat-icon-button>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="d-block d-sm-none"
+    >
       <mat-icon>menu</mat-icon>
     </button>
 
-    <!-- App Name Link -->
-    <a routerLink="/" class="text-white text-decoration-none">Book Store</a>
+    <!-- Menu Items -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/">Books</button>
+      <button mat-menu-item routerLink="/citat">Citat</button>
+    </mat-menu>
 
+    <!-- App Name Links (visible on larger devices) -->
+    <div class="d-none d-sm-block">
+      <a routerLink="/" class="text-white text-decoration-none mx-3">Books</a>
+      <a routerLink="/citat" class="text-white text-decoration-none">Citat</a>
+    </div>
     <!-- Flex Spacer (takes up remaining space) -->
     <div class="flex-grow-1"></div>
 
@@ -41,10 +53,6 @@
         </a>
         <!-- Dropdown Menu -->
         <mat-menu #menu="matMenu">
-          <button [routerLink]="['account', 1]" mat-menu-item>
-            <mat-icon>account_circle</mat-icon>
-            <span>View Profile</span>
-          </button>
           <button (click)="logout()" mat-menu-item>
             <mat-icon>logout</mat-icon>
             <span>Logout</span>

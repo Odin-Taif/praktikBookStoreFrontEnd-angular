@@ -1,0 +1,22 @@
+/* Ensure modal header is styled properly */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem; /* Adjust padding as needed */
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Style for the close button */
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #000; /* Adjust color as needed */
+}
+
+/* Optional: Customize button hover state */
+.btn-close:hover {
+  color: #dc3545; /* Red color on hover */
+}

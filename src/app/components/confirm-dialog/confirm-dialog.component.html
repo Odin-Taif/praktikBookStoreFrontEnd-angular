@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <h5 class="modal-title">Confirm</h5>
+  <button
+    type="button"
+    class="btn-close black"
+    (click)="onCancel()"
+    aria-label="Close"
+  >
+    X
+  </button>
+</div>
+<div mat-dialog-content>
+  <p>{{ data.message }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button class="btn btn-danger" (click)="onConfirm()">
+    Delete
+  </button>
+</div>

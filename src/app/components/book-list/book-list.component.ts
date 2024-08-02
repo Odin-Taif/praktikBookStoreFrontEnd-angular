@@ -11,6 +11,8 @@ import { CommonModule } from '@angular/common';
 import { BookService } from '../../services/Books.service';
 import { AddbookModalComponent } from '../addbook-modal/addbook-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-book-list',
@@ -24,6 +26,8 @@ export class BookListComponent implements OnInit, AfterViewInit {
   token = localStorage.getItem('token') || '';
   bookService = inject(BookService);
   matSnackBar = inject(MatSnackBar);
+  matDialog = inject(MatDialog);
+
   @ViewChild(AddbookModalComponent) addbookModal!: AddbookModalComponent;
 
   ngOnInit(): void {
@@ -55,23 +59,34 @@ export class BookListComponent implements OnInit, AfterViewInit {
     const token = localStorage.getItem('token') || ''; // Retrieve the JWT token
 
     if (token) {
-      this.bookService.deleteBook(bookId, token).subscribe({
-        next: () => {
-          this.matSnackBar.open('Book deleted successfully!', 'Close', {
-            duration: 3000,
+      // Open confirmation dialog
+      const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
+        width: '300px',
+        data: { message: 'Are you sure you want to delete this book?' },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          // Proceed with deletion
+          this.bookService.deleteBook(bookId, token).subscribe({
+            next: () => {
+              this.matSnackBar.open('Book deleted successfully!', 'Close', {
+                duration: 3000,
+              });
+              // Optionally, reload the list of books or update UI
+            },
+            error: (error) => {
+              console.error('Error deleting book:', error);
+              this.matSnackBar.open(
+                'Failed to delete book. Please try again.',
+                'Close',
+                {
+                  duration: 3000,
+                }
+              );
+            },
           });
-          // Optionally, reload the list of books or update UI
-        },
-        error: (error) => {
-          console.error('Error deleting book:', error);
-          this.matSnackBar.open(
-            'Failed to delete book. Please try again.',
-            'Close',
-            {
-              duration: 3000,
-            }
-          );
-        },
+        }
       });
     } else {
       console.log('No JWT token found in localStorage');
