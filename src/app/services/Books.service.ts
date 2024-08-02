@@ -2,17 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Book } from '../interfaces/book';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
-  private apiUrl = 'http://localhost:5000/api/Books';
+  private apiUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
   getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.apiUrl);
+    return this.http.get<Book[]>(`${this.apiUrl}/Books`);
   }
 
   addBook(book: Book, token: string): Observable<Book> {
@@ -20,7 +21,7 @@ export class BookService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.post<Book>(this.apiUrl, book, { headers });
+    return this.http.post<Book>(`${this.apiUrl}/Books`, book, { headers });
   }
 
   updateBook(book: Book, token: string): Observable<void> {
@@ -28,7 +29,9 @@ export class BookService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.put<void>(`${this.apiUrl}/${book.id}`, book, { headers });
+    return this.http.put<void>(`${this.apiUrl}/Books/${book.id}`, book, {
+      headers,
+    });
   }
 
   deleteBook(bookId: number, token: string): Observable<void> {
@@ -36,6 +39,8 @@ export class BookService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.delete<void>(`${this.apiUrl}/${bookId}`, { headers });
+    return this.http.delete<void>(`${this.apiUrl}/Books/${bookId}`, {
+      headers,
+    });
   }
 }
