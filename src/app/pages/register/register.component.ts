@@ -10,20 +10,19 @@ import { RegisterRequest } from '../../interfaces/register-request';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    RouterLink,
-  ],
+    RouterLink
+],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })

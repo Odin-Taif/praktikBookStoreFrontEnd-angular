@@ -6,14 +6,14 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
+
 import { BookService } from '../../services/Books.service';
 import { Book } from '../../interfaces/book';
 
 @Component({
   selector: 'app-addbook-modal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './addbook-modal.component.html',
   styleUrls: ['./addbook-modal.component.css'],
 })

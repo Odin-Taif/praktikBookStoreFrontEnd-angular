@@ -2,13 +2,13 @@
   <mat-toolbar
     color="primary"
     class="d-flex justify-content-between align-items-center px-4 py-2"
-  >
+    >
     <!-- Menu Button -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
       class="d-block d-sm-none"
-    >
+      >
       <mat-icon>menu</mat-icon>
     </button>
 
@@ -28,50 +28,52 @@
 
     <!-- User Profile Menu -->
     @if(isLoggedIn()){
-    <div *ngIf="authService.getUserDetail() as userDetail">
-      <div class="d-flex align-items-center gap-3">
-        <a
-          [matMenuTriggerFor]="menu"
-          class="d-flex align-items-center gap-2 text-decoration-none cursor-pointer"
-        >
-          <!-- User Initial Circle -->
-          <div
-            class="bg-danger text-white fw-bold shadow rounded-circle d-flex justify-content-center align-items-center"
-            style="width: 40px; height: 40px"
-          >
-            {{ userDetail!.fullName[0].toUpperCase() }}
+      @if (authService.getUserDetail(); as userDetail) {
+        <div>
+          <div class="d-flex align-items-center gap-3">
+            <a
+              [matMenuTriggerFor]="menu"
+              class="d-flex align-items-center gap-2 text-decoration-none cursor-pointer"
+              >
+              <!-- User Initial Circle -->
+              <div
+                class="bg-danger text-white fw-bold shadow rounded-circle d-flex justify-content-center align-items-center"
+                style="width: 40px; height: 40px"
+                >
+                {{ userDetail!.fullName[0].toUpperCase() }}
+              </div>
+              <!-- User Details -->
+              <div class="text-white">
+                <h1 class="m-0 fw-bold">
+                  {{ userDetail?.fullName }}
+                </h1>
+                <p class="m-0 small">
+                  {{ userDetail?.roles }}
+                </p>
+              </div>
+            </a>
+            <!-- Dropdown Menu -->
+            <mat-menu #menu="matMenu">
+              <button (click)="logout()" mat-menu-item>
+                <mat-icon>logout</mat-icon>
+                <span>Logout</span>
+              </button>
+            </mat-menu>
           </div>
-          <!-- User Details -->
-          <div class="text-white">
-            <h1 class="m-0 fw-bold">
-              {{ userDetail?.fullName }}
-            </h1>
-            <p class="m-0 small">
-              {{ userDetail?.roles }}
-            </p>
-          </div>
-        </a>
-        <!-- Dropdown Menu -->
-        <mat-menu #menu="matMenu">
-          <button (click)="logout()" mat-menu-item>
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
+        </div>
+      }
+      }@else{
+      <!-- Login/Register Links -->
+      <div>
+        <div class="d-flex align-items-center gap-3">
+          <a mat-button routerLink="/login" class="btn btn-outline-light">
+            Login
+          </a>
+          <a mat-button routerLink="/register" class="btn btn-outline-light">
+            Register
+          </a>
+        </div>
       </div>
-    </div>
-    }@else{
-    <!-- Login/Register Links -->
-    <div>
-      <div class="d-flex align-items-center gap-3">
-        <a mat-button routerLink="/login" class="btn btn-outline-light">
-          Login
-        </a>
-        <a mat-button routerLink="/register" class="btn btn-outline-light">
-          Register
-        </a>
-      </div>
-    </div>
     }
   </mat-toolbar>
 </div>
