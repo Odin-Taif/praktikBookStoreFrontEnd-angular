@@ -1,1 +1,18 @@
-<p>citat-list works!</p>
+<!-- quote-list.component.html -->
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Mina Citat</h2>
+  <div class="row">
+    <div *ngFor="let ettCitat of citat" class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <blockquote class="blockquote">
+            <p class="mb-0">{{ ettCitat.text }}</p>
+            <footer class="blockquote-footer mt-2">
+              {{ ettCitat.author }}
+            </footer>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

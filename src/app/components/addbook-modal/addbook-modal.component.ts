@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BookService } from '../../services/Books.service';
+import { BookService } from '../../services/books.service';
 import { Book } from '../../interfaces/book';
 
 @Component({
@@ -64,7 +64,7 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
     if (this.form.valid) {
       const formValue = this.form.value as Book; // Cast form value to the Book interface
       const token = localStorage.getItem('token') || ''; // Provide a default empty string if the token is null
-  
+
       if (token) {
         // Check if the token is non-empty
         this.bookService.addBook(formValue, token).subscribe({
@@ -72,11 +72,11 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
             this.matSnackBar.open('Book added successfully!', 'Close', {
               duration: 3000,
             });
-  
+
             // Emit the newly added book back to the parent component
             this.closeModal(); // Close the modal after successful addition
             this.bookAdded.emit(response); // Emit the added book
-  
+
             // Clear the form inputs
             this.form.reset(); // Resets the form values
           },
@@ -105,5 +105,4 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
       console.log('Form is invalid');
     }
   }
-  
 }

@@ -2,7 +2,7 @@
   <div class="h-screen">
     <div class="flex flex-col items-center gap-5 justify-center">
       @if(authService.getUserDetail()){
-      <app-book-list />
+      <app-citat-list />
       }@else{
       <div
         class="d-flex flex-column justify-content-center align-items-center min-vh-100 bg-light text-center"
@@ -12,6 +12,7 @@
           <a routerLink="/login" class="btn btn-primary btn-lg"> Login </a>
         </div>
       </div>
+
       }
     </div>
   </div>

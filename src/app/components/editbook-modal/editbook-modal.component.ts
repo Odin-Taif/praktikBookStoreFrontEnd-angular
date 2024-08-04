@@ -14,7 +14,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BookService } from '../../services/Books.service';
+import { BookService } from '../../services/books.service';
 import { Book } from '../../interfaces/book';
 
 @Component({
@@ -79,7 +79,7 @@ export class EditbookModalComponent implements OnInit, AfterViewInit {
       const formValue = this.form.value as Book;
       const bookUpdated = { ...formValue, id: this.bookToEdit.id };
       const token = localStorage.getItem('token') || '';
-  
+
       if (token) {
         this.bookService
           .updateBook(this.bookToEdit.id, bookUpdated, token)
@@ -89,7 +89,7 @@ export class EditbookModalComponent implements OnInit, AfterViewInit {
                 this.matSnackBar.open('Book updated successfully!', 'Close', {
                   duration: 3000,
                 });
-  
+
                 this.closeModal();
                 this.bookUpdated.emit(updatedBook); // Emit the updated book
               } else {
@@ -128,5 +128,4 @@ export class EditbookModalComponent implements OnInit, AfterViewInit {
       console.log('Form is invalid or bookToEdit is null');
     }
   }
-  
 }

@@ -1,14 +1,14 @@
 <div>
   <mat-toolbar
-    color="primary"
+    color=""
     class="d-flex justify-content-between align-items-center px-4 py-2"
-    >
+  >
     <!-- Menu Button -->
     <button
       mat-icon-button
       [matMenuTriggerFor]="menu"
       class="d-block d-sm-none"
-      >
+    >
       <mat-icon>menu</mat-icon>
     </button>
 
@@ -19,61 +19,69 @@
     </mat-menu>
 
     <!-- App Name Links (visible on larger devices) -->
-    <div class="d-none d-sm-block">
-      <a routerLink="/" class="text-white text-decoration-none mx-3">Books</a>
-      <a routerLink="/citat" class="text-white text-decoration-none">Citat</a>
+    <div class="d-none d-sm-block align-items-center gap-3">
+      <a
+        mat-button
+        routerLink="/"
+        class="text-black text-decoration-none mx-3 btn-outline"
+        >Books</a
+      >
+      <a
+        mat-button
+        routerLink="/citat"
+        class="text-black text-decoration-none btn-outline"
+        >Citat</a
+      >
     </div>
     <!-- Flex Spacer (takes up remaining space) -->
     <div class="flex-grow-1"></div>
 
     <!-- User Profile Menu -->
-    @if(isLoggedIn()){
-      @if (authService.getUserDetail(); as userDetail) {
-        <div>
-          <div class="d-flex align-items-center gap-3">
-            <a
-              [matMenuTriggerFor]="menu"
-              class="d-flex align-items-center gap-2 text-decoration-none cursor-pointer"
-              >
-              <!-- User Initial Circle -->
-              <div
-                class="bg-danger text-white fw-bold shadow rounded-circle d-flex justify-content-center align-items-center"
-                style="width: 40px; height: 40px"
-                >
-                {{ userDetail!.fullName[0].toUpperCase() }}
-              </div>
-              <!-- User Details -->
-              <div class="text-white">
-                <h1 class="m-0 fw-bold">
-                  {{ userDetail?.fullName }}
-                </h1>
-                <p class="m-0 small">
-                  {{ userDetail?.roles }}
-                </p>
-              </div>
-            </a>
-            <!-- Dropdown Menu -->
-            <mat-menu #menu="matMenu">
-              <button (click)="logout()" mat-menu-item>
-                <mat-icon>logout</mat-icon>
-                <span>Logout</span>
-              </button>
-            </mat-menu>
+    @if(isLoggedIn()){ @if (authService.getUserDetail(); as userDetail) {
+    <div>
+      <div class="d-flex align-items-center gap-3">
+        <a
+          [matMenuTriggerFor]="menu"
+          class="d-flex align-items-center gap-2 text-decoration-none cursor-pointer"
+        >
+          <div class="text-black">
+            <h1 class="m-0 fw-bold">
+              {{ userDetail?.fullName }}
+            </h1>
+            <p class="m-0 small">
+              {{ userDetail?.roles }}
+            </p>
           </div>
-        </div>
-      }
-      }@else{
-      <!-- Login/Register Links -->
-      <div>
-        <div class="d-flex align-items-center gap-3">
-          <a mat-button routerLink="/login" class="btn btn-outline-light">
-            Login
-          </a>
-          <a mat-button routerLink="/register" class="btn btn-outline-light">
-            Register
-          </a>
-        </div>
+          <!-- User Initial Circle -->
+          <div
+            class="bg-danger text-white fw-bold shadow rounded-circle d-flex justify-content-center align-items-center"
+            style="width: 40px; height: 40px"
+          >
+            {{ userDetail!.fullName[0].toUpperCase() }}
+          </div>
+          <!-- User Details -->
+        </a>
+        <!-- Dropdown Menu -->
+        <mat-menu #menu="matMenu">
+          <button (click)="logout()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
       </div>
+    </div>
+    } }@else{
+    <!-- Login/Register Links -->
+
+    <div class="d-flex align-items-center gap-3">
+      <a mat-button routerLink="/login" class="btn btn-outline">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </a>
+      <a mat-button routerLink="/register" class="btn btn-outline">
+        <i class="fas fa-user-plus"></i> Register
+      </a>
+    </div>
     }
+    <app-theme-toggle />
   </mat-toolbar>
 </div>

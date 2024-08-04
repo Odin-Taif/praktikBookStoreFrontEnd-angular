@@ -1,1 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* Light theme */
+:root {
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --button-background: #007bff;
+  --button-text-color: #ffffff;
+}
+
+/* Dark theme */
+.dark-theme {
+  --background-color: #343a40;
+  --text-color: #198754;
+  --button-background: #007bff;
+  --button-text-color: #ffffff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "text": "The best way to predict the future is to invent it.",
+    "author": "Alan Kay"
+  },
+  {
+    "id": 2,
+    "text": "In three words I can sum up everything I've learned about life: it goes on.",
+    "author": "Robert Frost"
+  },
+  {
+    "id": 3,
+    "text": "The only way to do great work is to love what you do.",
+    "author": "Steve Jobs"
+  },
+  {
+    "id": 4,
+    "text": "You miss 100% of the shots you don't take.",
+    "author": "Wayne Gretzky"
+  },
+  {
+    "id": 1,
+    "text": "The only limit to our realization of tomorrow is our doubts of today.",
+    "author": "Franklin D. Roosevelt"
+  }
+]

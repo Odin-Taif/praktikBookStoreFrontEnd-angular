@@ -1,0 +1,21 @@
+/* quote-list.component.css */
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: none;
+}
+
+.blockquote {
+  font-size: 1.25rem;
+  color: #495057;
+}
+
+.blockquote-footer {
+  color: #6c757d;
+  font-size: 0.9rem;
+}

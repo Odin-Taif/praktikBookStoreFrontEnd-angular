@@ -34,8 +34,11 @@ export class LoginComponent implements OnInit {
   hide = true;
   form!: FormGroup;
   fb = inject(FormBuilder);
+  loading = false;
 
   login() {
+    if (this.form.invalid) return;
+    this.loading = true; // Start loading
     this.authService.login(this.form.value).subscribe({
       next: (response) => {
         this.matSnackBar.open(response.message, 'Close', {
@@ -49,6 +52,10 @@ export class LoginComponent implements OnInit {
           duration: 5000,
           horizontalPosition: 'center',
         });
+        this.loading = false; // Stop loading
+      },
+      complete: () => {
+        this.loading = false; // Stop loading
       },
     });
   }

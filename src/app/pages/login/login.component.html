@@ -24,6 +24,9 @@
           formControlName="email"
         />
       </div>
+      @if (form.get('email')?.invalid && form.get('email')?.touched) {
+      <div class="text-danger">Valid email is required.</div>
+      }
     </div>
 
     <div class="mb-3">
@@ -39,22 +42,26 @@
           placeholder="Password"
           formControlName="password"
         />
-        <!-- <button
-          type="button"
-          class="btn btn-outline-secondary"
-          (click)="hide = !hide"
-        > -->
-        <!-- <i class="bi" [ngClass]="hide ? 'bi-eye-slash' : 'bi-eye'"></i> -->
-        <!-- </button> -->
       </div>
+      @if (form.get('password')?.invalid && form.get('password')?.touched) {
+      <div class="text-danger">Password is required.</div>
+      }
     </div>
 
     <button
       type="submit"
-      [disabled]="!form.valid"
+      [disabled]="!form.valid || loading"
       class="btn btn-primary w-100 fw-bold"
     >
-      Login
+      @if(loading){
+      <span
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      } @if(!loading){
+      <span>Login</span>
+      }
     </button>
 
     <div class="mt-4 text-center">

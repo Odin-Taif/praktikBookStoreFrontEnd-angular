@@ -21,8 +21,8 @@ import { AuthService } from '../../services/auth.service';
     MatInputModule,
     MatButtonModule,
     MatSnackBarModule,
-    RouterLink
-],
+    RouterLink,
+  ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
@@ -32,6 +32,7 @@ export class RegisterComponent implements OnInit {
   matSnackBar = inject(MatSnackBar);
   router = inject(Router);
   authService = inject(AuthService);
+  loading = false;
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -43,6 +44,8 @@ export class RegisterComponent implements OnInit {
   }
 
   signup() {
+    if (this.form.invalid) return;
+    this.loading = true; // Start loading
     if (this.form.valid) {
       this.authService.signUp(this.form.value).subscribe({
         next: (response) => {
@@ -57,6 +60,10 @@ export class RegisterComponent implements OnInit {
             duration: 5000,
             horizontalPosition: 'center',
           });
+          this.loading = false; // Stop loading
+        },
+        complete: () => {
+          this.loading = false; // Stop loading
         },
       });
     } else {
