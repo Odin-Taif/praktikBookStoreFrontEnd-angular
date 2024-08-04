@@ -1,0 +1,124 @@
+<!-- Edit Book Modal -->
+<div
+  class="modal fade"
+  id="editBookModal"
+  tabindex="-1"
+  aria-labelledby="editBookModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editBookModalLabel">Edit Book</h5>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeModal()"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="mb-3">
+            <label for="bookTitle" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookTitle"
+              formControlName="title"
+              placeholder="Enter book title"
+            />
+            @if (form.get('title')?.invalid && (form.get('title')?.touched ||
+            form.get('title')?.dirty)) {
+            <div class="text-danger">
+              @if (form.get('title')?.errors?.['required']) {
+              <div>Title is required.</div>
+              } @if (form.get('title')?.errors?.['minlength']) {
+              <div>Title must be at least 2 characters long.</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="bookAuthor" class="form-label">Author</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookAuthor"
+              formControlName="author"
+              placeholder="Enter author name"
+            />
+            @if (form.get('author')?.invalid && (form.get('author')?.touched ||
+            form.get('author')?.dirty)) {
+            <div class="text-danger">
+              @if (form.get('author')?.errors?.['required']) {
+              <div>Author is required.</div>
+              } @if (form.get('author')?.errors?.['minlength']) {
+              <div>Author must be at least 2 characters long.</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="bookISBN" class="form-label">ISBN</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bookISBN"
+              formControlName="isbn"
+              placeholder="Enter ISBN number"
+            />
+            @if (form.get('isbn')?.invalid && (form.get('isbn')?.touched ||
+            form.get('isbn')?.dirty)) {
+            <div class="text-danger">
+              @if (form.get('isbn')?.errors?.['required']) {
+              <div>ISBN is required.</div>
+              } @if (form.get('isbn')?.errors?.['pattern']) {
+              <div>ISBN must be a 13-digit number.</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="publishedDate" class="form-label">Published Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="publishedDate"
+              formControlName="publishedDate"
+            />
+            @if (form.get('publishedDate')?.invalid &&
+            (form.get('publishedDate')?.touched ||
+            form.get('publishedDate')?.dirty)) {
+            <div class="text-danger">
+              @if (form.get('publishedDate')?.errors?.['required']) {
+              <div>Published date is required.</div>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="closeModal()"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="form.invalid"
+            >
+              Update Book
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

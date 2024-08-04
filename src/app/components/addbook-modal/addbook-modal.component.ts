@@ -1,4 +1,11 @@
-import { Component, AfterViewInit, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  AfterViewInit,
+  OnInit,
+  inject,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,7 +13,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 import { BookService } from '../../services/Books.service';
 import { Book } from '../../interfaces/book';
 
@@ -23,6 +29,7 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
   bookService = inject(BookService);
   matSnackBar = inject(MatSnackBar);
   private modalElement!: HTMLElement;
+  @Output() bookAdded = new EventEmitter<Book>();
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -57,7 +64,7 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
     if (this.form.valid) {
       const formValue = this.form.value as Book; // Cast form value to the Book interface
       const token = localStorage.getItem('token') || ''; // Provide a default empty string if the token is null
-
+  
       if (token) {
         // Check if the token is non-empty
         this.bookService.addBook(formValue, token).subscribe({
@@ -65,7 +72,13 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
             this.matSnackBar.open('Book added successfully!', 'Close', {
               duration: 3000,
             });
-            this.closeModal();
+  
+            // Emit the newly added book back to the parent component
+            this.closeModal(); // Close the modal after successful addition
+            this.bookAdded.emit(response); // Emit the added book
+  
+            // Clear the form inputs
+            this.form.reset(); // Resets the form values
           },
           error: (error) => {
             console.error('Error adding book:', error);
@@ -92,4 +105,5 @@ export class AddbookModalComponent implements OnInit, AfterViewInit {
       console.log('Form is invalid');
     }
   }
+  
 }

@@ -24,14 +24,12 @@ export class BookService {
     return this.http.post<Book>(`${this.apiUrl}/Books`, book, { headers });
   }
 
-  updateBook(book: Book, token: string): Observable<void> {
+  updateBook(id: number, book: Book, token: string): Observable<Book> {
+    // console.log(book);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-
-    return this.http.put<void>(`${this.apiUrl}/Books/${book.id}`, book, {
-      headers,
-    });
+    return this.http.put<Book>(`${this.apiUrl}/Books/${id}`, book, { headers });
   }
 
   deleteBook(bookId: number, token: string): Observable<void> {

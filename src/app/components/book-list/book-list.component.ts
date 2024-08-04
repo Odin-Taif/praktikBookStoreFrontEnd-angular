@@ -1,23 +1,23 @@
 import {
   Component,
   OnInit,
-  inject,
   ViewChild,
   AfterViewInit,
+  inject,
 } from '@angular/core';
 import { Book } from '../../interfaces/book';
-// Adjust the path as necessary
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../services/Books.service';
 import { AddbookModalComponent } from '../addbook-modal/addbook-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { EditbookModalComponent } from '../editbook-modal/editbook-modal.component';
 
 @Component({
   selector: 'app-book-list',
   standalone: true,
-  imports: [CommonModule, AddbookModalComponent],
+  imports: [CommonModule, AddbookModalComponent, EditbookModalComponent],
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css'],
 })
@@ -28,15 +28,16 @@ export class BookListComponent implements OnInit, AfterViewInit {
   matSnackBar = inject(MatSnackBar);
   matDialog = inject(MatDialog);
 
-  @ViewChild(AddbookModalComponent) addbookModal!: AddbookModalComponent;
+  @ViewChild(AddbookModalComponent, { static: false })
+  addbookModal!: AddbookModalComponent;
+  @ViewChild(EditbookModalComponent, { static: false })
+  editbookModal!: EditbookModalComponent;
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe({
       next: (data) => {
         this.books = data;
-        console.log(data);
       },
-
       error: (err) => {
         console.error('Failed to fetch books', err);
       },
@@ -44,14 +45,46 @@ export class BookListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Use this.addbookModal to access the methods of AddbookModalComponent
+    // console.log('AddbookModalComponent:', this.addbookModal);
+    // console.log('EditbookModalComponent:', this.editbookModal);
+
+    if (this.addbookModal) {
+      this.addbookModal.bookAdded.subscribe((newBook: Book) => {
+        this.books.push(newBook); // Add the new book to the list
+      });
+    } else {
+      console.error('AddbookModalComponent is not initialized.');
+    }
+
+    if (this.editbookModal) {
+      this.editbookModal.bookUpdated.subscribe((updatedBook: Book | null) => {
+        if (updatedBook) {
+          const index = this.books.findIndex(
+            (book) => book.id === updatedBook.id
+          );
+          if (index !== -1) {
+            this.books[index] = updatedBook; // Update the list with the edited book
+          } else {
+            console.warn('Book to update not found in list');
+          }
+        } else {
+          console.error('Received null or undefined updatedBook');
+        }
+      });
+    } else {
+      console.error('EditbookModalComponent is not initialized.');
+    }
   }
 
   openAddBookModal() {
-    console.log('ehlllo form modal');
-
     if (this.addbookModal) {
       this.addbookModal.openModal();
+    }
+  }
+
+  openEditBookModal(book: Book) {
+    if (this.editbookModal) {
+      this.editbookModal.openModal(book);
     }
   }
 
@@ -70,10 +103,10 @@ export class BookListComponent implements OnInit, AfterViewInit {
           // Proceed with deletion
           this.bookService.deleteBook(bookId, token).subscribe({
             next: () => {
+              this.books = this.books.filter((book) => book.id !== bookId); // Remove the deleted book from the list
               this.matSnackBar.open('Book deleted successfully!', 'Close', {
                 duration: 3000,
               });
-              // Optionally, reload the list of books or update UI
             },
             error: (error) => {
               console.error('Error deleting book:', error);
