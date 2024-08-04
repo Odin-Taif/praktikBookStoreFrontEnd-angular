@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Book } from '../../interfaces/book';
 import { CommonModule } from '@angular/common';
-import { BookService } from '../../services/books.service';
+import { BookService } from '../../services/Books.service';
 import { AddbookModalComponent } from '../addbook-modal/addbook-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';

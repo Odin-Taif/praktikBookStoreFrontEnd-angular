@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BookService } from '../../services/books.service';
+import { BookService } from '../../services/Books.service';
 import { Book } from '../../interfaces/book';
 
 @Component({
